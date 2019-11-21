@@ -44,6 +44,9 @@ defmodule HelloNerves.MixProject do
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
 
+      # I2C
+      {:circuits_i2c, "~> 0.1"},
+
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.6", targets: @all_targets},
       {:nerves_init_gadget, "~> 0.4", targets: @all_targets},
