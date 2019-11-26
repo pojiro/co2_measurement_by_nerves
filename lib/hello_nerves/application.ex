@@ -33,6 +33,7 @@ defmodule HelloNerves.Application do
       # Children for all targets except host
       # Starts a worker by calling: HelloNerves.Worker.start_link(arg)
       # {HelloNerves.Worker, arg},
+      {HelloNerves.Co2, 0}
     ]
   end
 
