@@ -34,7 +34,7 @@ defmodule HelloNerves.Co2 do
       case I2C.read(ref, @address, 7) do
         {:ok, <<8,x,y,_,_,_,_>>=data} ->
           IO.inspect(data)
-          x*256+y
+          x*256+y |> http_post()
         {:ok, <<255,_,_,_,_,_,_>>=data} ->
           IO.inspect(data)
         {:error, term} ->
@@ -57,5 +57,16 @@ defmodule HelloNerves.Co2 do
 
   def handle_call({:offset, offset}, _from, ppm) do
     {:reply, ppm + offset, ppm + offset}
+  end
+
+  @measurements_url Application.get_env(:easy_iot_server, :measurements_url)
+  defp http_post(data) do
+    with {:ok, json} <-
+           Poison.encode(%{data: %{utc_datetime_usec: DateTime.utc_now(), value: data}}) do
+      header_list = [{"Content-Type", "application/json"}]
+      HTTPoison.post(@measurements_url, json, header_list)
+    end
+
+    data
   end
 end

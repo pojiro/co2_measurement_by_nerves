@@ -26,6 +26,9 @@ config :shoehorn,
 
 config :logger, backends: [RingLogger]
 
+config :easy_iot_server,
+  measurements_url: "http://192.168.0.10:4000/api/measurements"
+
 if Mix.target() != :host do
   import_config "target.exs"
 end
